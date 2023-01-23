@@ -8,7 +8,7 @@ The Pier Node.js library provides access to the Pier API from JavaScript/TypeScr
 
 ## Documentation
 
-API documentation is available at <{docs_url}>.
+API documentation is available at <https://pier.mintlify.app/introduction>.
 
 -->
 
