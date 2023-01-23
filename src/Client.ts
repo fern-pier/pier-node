@@ -4,6 +4,7 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
+import { Client as ApplicationsClient } from "./api/resources/applications/client/Client";
 import { Client as BorrowersClient } from "./api/resources/borrowers/client/Client";
 
 export declare namespace PierApiClient {
@@ -15,6 +16,12 @@ export declare namespace PierApiClient {
 
 export class PierApiClient {
     constructor(private readonly options: PierApiClient.Options) {}
+
+    #applications: ApplicationsClient | undefined;
+
+    public get applications(): ApplicationsClient {
+        return (this.#applications ??= new ApplicationsClient(this.options));
+    }
 
     #borrowers: BorrowersClient | undefined;
 

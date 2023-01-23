@@ -17,7 +17,9 @@ export declare namespace Client {
 }
 
 /**
- * Borrowers represent a legal borrower, and can either be a consumer (e.g. for personal loans and lines of credit) or a [business](notion://www.notion.so/72a5b7a8b07d4bb983ae86a6b32d6696#5261b2cf754e453c8ad40b059ac0d584) (e.g. for commercial charge cards and loans).
+ * Applications represent the credit application for a borrower.
+ * Applications must be created for a given borrower, and one borrower can have many applications.
+ * Once an application is created, it must either be approved or rejected.
  * Creating a borrower (or referencing an existing one) is the first step in the Pier credit origination process.
  *
  */
@@ -25,210 +27,21 @@ export class Client {
     constructor(private readonly options: Client.Options) {}
 
     /**
-     * Creates a business borrower. Business borrowers must have a unique EIN.
-     * @throws {PierApi.InvalidInputError}
-     * @throws {PierApi.DuplicateEinError}
-     */
-    public async createBusinessBorrower(request: PierApi.BusinessBorrowerRequest): Promise<PierApi.BusinessBorrower> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
-            },
-            body: await serializers.borrowers.createBusinessBorrower.Request.json(request),
-        });
-        if (_response.ok) {
-            return await serializers.borrowers.createBusinessBorrower.Response.parse(
-                _response.body as serializers.borrowers.createBusinessBorrower.Response.Raw
-            );
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new PierApi.InvalidInputError(
-                        await serializers.InvalidInputError.parse(
-                            _response.error.body as serializers.InvalidInputError.Raw
-                        )
-                    );
-                case 400:
-                    throw new PierApi.DuplicateEinError(
-                        await serializers.DuplicateEinError.parse(
-                            _response.error.body as serializers.DuplicateEinError.Raw
-                        )
-                    );
-                default:
-                    throw new errors.PierApiError({
-                        statusCode: _response.error.statusCode,
-                        responseBody: _response.error.rawBody,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.PierApiError({
-                    statusCode: _response.error.statusCode,
-                    responseBody: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.PierApiTimeoutError();
-            case "unknown":
-                throw new errors.PierApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Updates an existing borrower. The full borrower object needs to be supplied in the update request.
-     * @throws {PierApi.InvalidInputError}
-     * @throws {PierApi.DuplicateEinError}
-     */
-    public async updateBusinessBorrower(
-        borrowerId: PierApi.BusinessBorrowerId,
-        request: PierApi.BusinessBorrowerRequest
-    ): Promise<PierApi.BusinessBorrower> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/${borrowerId}`
-            ),
-            method: "PATCH",
-            headers: {
-                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
-            },
-            body: await serializers.borrowers.updateBusinessBorrower.Request.json(request),
-        });
-        if (_response.ok) {
-            return await serializers.borrowers.updateBusinessBorrower.Response.parse(
-                _response.body as serializers.borrowers.updateBusinessBorrower.Response.Raw
-            );
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new PierApi.InvalidInputError(
-                        await serializers.InvalidInputError.parse(
-                            _response.error.body as serializers.InvalidInputError.Raw
-                        )
-                    );
-                case 400:
-                    throw new PierApi.DuplicateEinError(
-                        await serializers.DuplicateEinError.parse(
-                            _response.error.body as serializers.DuplicateEinError.Raw
-                        )
-                    );
-                default:
-                    throw new errors.PierApiError({
-                        statusCode: _response.error.statusCode,
-                        responseBody: _response.error.rawBody,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.PierApiError({
-                    statusCode: _response.error.statusCode,
-                    responseBody: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.PierApiTimeoutError();
-            case "unknown":
-                throw new errors.PierApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Creates a consumer borrower. Consumer borrower's must have a unique SSN.
-     * @throws {PierApi.InvalidInputError}
-     * @throws {PierApi.DuplicateSsnError}
-     */
-    public async createConsumerBorrower(request: PierApi.ConsumerBorrowerRequest): Promise<PierApi.ConsumerBorrower> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers/consumer"
-            ),
-            method: "POST",
-            headers: {
-                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
-            },
-            body: await serializers.borrowers.createConsumerBorrower.Request.json(request),
-        });
-        if (_response.ok) {
-            return await serializers.borrowers.createConsumerBorrower.Response.parse(
-                _response.body as serializers.borrowers.createConsumerBorrower.Response.Raw
-            );
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new PierApi.InvalidInputError(
-                        await serializers.InvalidInputError.parse(
-                            _response.error.body as serializers.InvalidInputError.Raw
-                        )
-                    );
-                case 400:
-                    throw new PierApi.DuplicateSsnError(
-                        await serializers.DuplicateSsnError.parse(
-                            _response.error.body as serializers.DuplicateSsnError.Raw
-                        )
-                    );
-                default:
-                    throw new errors.PierApiError({
-                        statusCode: _response.error.statusCode,
-                        responseBody: _response.error.rawBody,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.PierApiError({
-                    statusCode: _response.error.statusCode,
-                    responseBody: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.PierApiTimeoutError();
-            case "unknown":
-                throw new errors.PierApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
      * @throws {PierApi.InvalidInputError}
      * @throws {PierApi.BorrowerNotFoundError}
      */
-    public async updateConsumerBorrower(
-        borrowerId: PierApi.ConsumerBorrowerId,
-        request: PierApi.ConsumerBorrowerRequest
-    ): Promise<PierApi.ConsumerBorrower> {
+    public async create(request: PierApi.CreateApplicationRequest): Promise<PierApi.Application> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/consumer/${borrowerId}`
-            ),
-            method: "PATCH",
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications/"),
+            method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
-            body: await serializers.borrowers.updateConsumerBorrower.Request.json(request),
+            body: await serializers.applications.create.Request.json(request),
         });
         if (_response.ok) {
-            return await serializers.borrowers.updateConsumerBorrower.Response.parse(
-                _response.body as serializers.borrowers.updateConsumerBorrower.Response.Raw
+            return await serializers.applications.create.Response.parse(
+                _response.body as serializers.applications.create.Response.Raw
             );
         }
 
@@ -270,28 +83,32 @@ export class Client {
     }
 
     /**
-     * Retrieve one borrower by id
+     * @throws {PierApi.InvalidInputError}
      * @throws {PierApi.BorrowerNotFoundError}
      */
-    public async getBorrower(borrowerId: PierApi.ConsumerBorrowerId): Promise<PierApi.ConsumerBorrower> {
+    public async approve(request: PierApi.CreateApplicationRequest): Promise<PierApi.Application> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/${borrowerId}`
-            ),
-            method: "GET",
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications/"),
+            method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
+            body: await serializers.applications.approve.Request.json(request),
         });
         if (_response.ok) {
-            return await serializers.borrowers.getBorrower.Response.parse(
-                _response.body as serializers.borrowers.getBorrower.Response.Raw
+            return await serializers.applications.approve.Response.parse(
+                _response.body as serializers.applications.approve.Response.Raw
             );
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new PierApi.InvalidInputError(
+                        await serializers.InvalidInputError.parse(
+                            _response.error.body as serializers.InvalidInputError.Raw
+                        )
+                    );
                 case 404:
                     throw new PierApi.BorrowerNotFoundError(
                         await serializers.BorrowerNotFoundError.parse(
@@ -322,13 +139,77 @@ export class Client {
     }
 
     /**
-     * Retrieve all borrowers associated with your account
+     * Updates the status of a credit application to `REJECTED` and returns a user readable rejection reason, to be used in the adverse action notice
+     * @throws {PierApi.InvalidInputError}
+     * @throws {PierApi.ApplicationNotFoundError}
      */
-    public async getAllBorrowers(): Promise<PierApi.ConsumerBorrower[]> {
+    public async reject(
+        applicationId: PierApi.ApplicationId,
+        request: PierApi.RejectRequest
+    ): Promise<PierApi.Application> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers"
+                `/applications/${applicationId}/reject`
+            ),
+            method: "POST",
+            headers: {
+                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
+            },
+            body: await serializers.applications.reject.Request.json(request),
+        });
+        if (_response.ok) {
+            return await serializers.applications.reject.Response.parse(
+                _response.body as serializers.applications.reject.Response.Raw
+            );
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new PierApi.InvalidInputError(
+                        await serializers.InvalidInputError.parse(
+                            _response.error.body as serializers.InvalidInputError.Raw
+                        )
+                    );
+                case 404:
+                    throw new PierApi.ApplicationNotFoundError(
+                        await serializers.ApplicationNotFoundError.parse(
+                            _response.error.body as serializers.ApplicationNotFoundError.Raw
+                        )
+                    );
+                default:
+                    throw new errors.PierApiError({
+                        statusCode: _response.error.statusCode,
+                        responseBody: _response.error.rawBody,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.PierApiError({
+                    statusCode: _response.error.statusCode,
+                    responseBody: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.PierApiTimeoutError();
+            case "unknown":
+                throw new errors.PierApiError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * Get an application by its id
+     * @throws {PierApi.ApplicationNotFoundError}
+     */
+    public async get(applicationId: PierApi.ApplicationId): Promise<PierApi.Application> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.PierApiEnvironment.Production,
+                `/applications/${applicationId}`
             ),
             method: "GET",
             headers: {
@@ -336,8 +217,59 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.borrowers.getAllBorrowers.Response.parse(
-                _response.body as serializers.borrowers.getAllBorrowers.Response.Raw
+            return await serializers.applications.get.Response.parse(
+                _response.body as serializers.applications.get.Response.Raw
+            );
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new PierApi.ApplicationNotFoundError(
+                        await serializers.ApplicationNotFoundError.parse(
+                            _response.error.body as serializers.ApplicationNotFoundError.Raw
+                        )
+                    );
+                default:
+                    throw new errors.PierApiError({
+                        statusCode: _response.error.statusCode,
+                        responseBody: _response.error.rawBody,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.PierApiError({
+                    statusCode: _response.error.statusCode,
+                    responseBody: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.PierApiTimeoutError();
+            case "unknown":
+                throw new errors.PierApiError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * List all applications associated with your account
+     */
+    public async getAll(): Promise<PierApi.Application[]> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.PierApiEnvironment.Production,
+                "/applications/applications"
+            ),
+            method: "GET",
+            headers: {
+                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
+            },
+        });
+        if (_response.ok) {
+            return await serializers.applications.getAll.Response.parse(
+                _response.body as serializers.applications.getAll.Response.Raw
             );
         }
 

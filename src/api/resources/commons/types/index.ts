@@ -6,3 +6,4 @@ export * from "./ErrorDetail";
 export * from "./DuplicateEin";
 export * from "./DuplicateSsn";
 export * from "./BorrowerNotFound";
+export * from "./ApplicationNotFound";
