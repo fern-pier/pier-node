@@ -31,10 +31,7 @@ export class Client {
      */
     public async createBusinessBorrower(request: PierApi.BusinessBorrowerRequest): Promise<PierApi.BusinessBorrower> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/borrowers/business"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
@@ -96,7 +93,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/${borrowerId}`
+                `/borrowers/business/${borrowerId}`
             ),
             method: "PATCH",
             headers: {
@@ -154,10 +151,7 @@ export class Client {
      */
     public async createConsumerBorrower(request: PierApi.ConsumerBorrowerRequest): Promise<PierApi.ConsumerBorrower> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers/consumer"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/borrowers/consumer"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
@@ -218,7 +212,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/consumer/${borrowerId}`
+                `/borrowers/consumer/${borrowerId}`
             ),
             method: "PATCH",
             headers: {
@@ -277,7 +271,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/borrowers/borrowers/${borrowerId}`
+                `/borrowers/${borrowerId}`
             ),
             method: "GET",
             headers: {
@@ -326,10 +320,7 @@ export class Client {
      */
     public async getAllBorrowers(): Promise<PierApi.ConsumerBorrower[]> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/borrowers/borrowers"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/borrowers/"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),

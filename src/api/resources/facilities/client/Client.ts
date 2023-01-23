@@ -32,10 +32,7 @@ export class Client {
      */
     public async create(request: PierApi.CreateFacilityRequest): Promise<PierApi.Facility> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/facilities/facilities"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities/"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
@@ -97,7 +94,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/facilities/facilities/${facilityId}/close`
+                `/facilities/${facilityId}/close`
             ),
             method: "POST",
             headers: {
@@ -153,10 +150,7 @@ export class Client {
      */
     public async listAll(): Promise<PierApi.Facility[]> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/facilities/facilities"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities/"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),

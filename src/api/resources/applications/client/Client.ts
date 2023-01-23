@@ -264,10 +264,7 @@ export class Client {
      */
     public async getAll(): Promise<PierApi.Application[]> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                "/applications/applications"
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications/"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
