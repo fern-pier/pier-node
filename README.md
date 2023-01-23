@@ -4,13 +4,9 @@
 
 The Pier Node.js library provides access to the Pier API from JavaScript/TypeScript.
 
-<!--
-
 ## Documentation
 
 API documentation is available at <https://pier.mintlify.app/introduction>.
-
--->
 
 ## Usage
 
