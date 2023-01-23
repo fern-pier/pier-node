@@ -196,12 +196,9 @@ export class Client {
     /**
      * List all loan agreements on your account
      */
-    public async getAll(loanAgreementId: PierApi.LoanAgreementId): Promise<PierApi.LoanAgreement[]> {
+    public async getAll(): Promise<PierApi.LoanAgreement[]> {
         const _response = await core.fetcher({
-            url: urlJoin(
-                this.options.environment ?? environments.PierApiEnvironment.Production,
-                `/loan_agreements/${loanAgreementId}`
-            ),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/loan_agreements/"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
