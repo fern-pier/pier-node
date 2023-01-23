@@ -146,6 +146,58 @@ export class Client {
     }
 
     /**
+     * Retrieve a facility by its id
+     * @throws {PierApi.FacilityNotFoundError}
+     */
+    public async get(facilityId: PierApi.FacilityId): Promise<PierApi.Facility> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.PierApiEnvironment.Production,
+                `/facilities/${facilityId}`
+            ),
+            method: "GET",
+            headers: {
+                Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
+            },
+        });
+        if (_response.ok) {
+            return await serializers.facilities.get.Response.parse(
+                _response.body as serializers.facilities.get.Response.Raw
+            );
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new PierApi.FacilityNotFoundError(
+                        await serializers.FacilityNotFoundError.parse(
+                            _response.error.body as serializers.FacilityNotFoundError.Raw
+                        )
+                    );
+                default:
+                    throw new errors.PierApiError({
+                        statusCode: _response.error.statusCode,
+                        responseBody: _response.error.rawBody,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.PierApiError({
+                    statusCode: _response.error.statusCode,
+                    responseBody: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.PierApiTimeoutError();
+            case "unknown":
+                throw new errors.PierApiError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * List all facilities on your account
      */
     public async listAll(): Promise<PierApi.Facility[]> {
