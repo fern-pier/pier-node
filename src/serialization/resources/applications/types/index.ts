@@ -2,7 +2,6 @@ export * from "./ApplicationId";
 export * from "./ApplicationStatus";
 export * from "./CreateApplicationRequest";
 export * from "./Application";
-export * from "./CreditType";
 export * from "./LineOfCreditOffer";
 export * from "./LoanOffer";
 export * from "./RejectRequest";

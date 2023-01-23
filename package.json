@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/pier",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "repository": "https://github.com/fern-pier/pier-node",
     "files": [
         "dist",

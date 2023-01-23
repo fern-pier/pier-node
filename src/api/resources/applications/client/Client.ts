@@ -86,9 +86,15 @@ export class Client {
      * @throws {PierApi.InvalidInputError}
      * @throws {PierApi.BorrowerNotFoundError}
      */
-    public async approve(request: PierApi.CreateApplicationRequest): Promise<PierApi.Application> {
+    public async approve(
+        applicationId: PierApi.ApplicationId,
+        request: PierApi.CreateApplicationRequest
+    ): Promise<PierApi.Application> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications/"),
+            url: urlJoin(
+                this.options.environment ?? environments.PierApiEnvironment.Production,
+                `/applications/${applicationId}/approve`
+            ),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),

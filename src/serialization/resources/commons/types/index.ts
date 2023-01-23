@@ -1,5 +1,5 @@
-export * from "./Id";
 export * from "./Address";
+export * from "./CreditType";
 export * from "./BaseErrorBody";
 export * from "./InvalidInput";
 export * from "./ErrorDetail";
@@ -7,3 +7,10 @@ export * from "./DuplicateEin";
 export * from "./DuplicateSsn";
 export * from "./BorrowerNotFound";
 export * from "./ApplicationNotFound";
+export * from "./DocumentCannotBeCreated";
+export * from "./DocumentCannotBeSigned";
+export * from "./DocumentNotFound";
+export * from "./FacilityCannotBeCreated";
+export * from "./FacilityAlreadyExists";
+export * from "./FacilityNotFound";
+export * from "./FacilityCannotBeClosed";

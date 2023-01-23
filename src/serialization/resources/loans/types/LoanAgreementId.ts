@@ -6,8 +6,9 @@ import * as serializers from "../../..";
 import { PierApi } from "@fern-api/pier";
 import * as core from "../../../../core";
 
-export const Id: core.serialization.Schema<serializers.Id.Raw, PierApi.Id> = core.serialization.string();
+export const LoanAgreementId: core.serialization.Schema<serializers.LoanAgreementId.Raw, PierApi.LoanAgreementId> =
+    core.serialization.string();
 
-export declare namespace Id {
+export declare namespace LoanAgreementId {
     type Raw = string;
 }

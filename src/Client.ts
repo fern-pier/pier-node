@@ -6,6 +6,9 @@ import * as environments from "./environments";
 import * as core from "./core";
 import { Client as ApplicationsClient } from "./api/resources/applications/client/Client";
 import { Client as BorrowersClient } from "./api/resources/borrowers/client/Client";
+import { Client as CoverageClient } from "./api/resources/coverage/client/Client";
+import { Client as FacilitiesClient } from "./api/resources/facilities/client/Client";
+import { Client as LoansClient } from "./api/resources/loans/client/Client";
 
 export declare namespace PierApiClient {
     interface Options {
@@ -27,5 +30,23 @@ export class PierApiClient {
 
     public get borrowers(): BorrowersClient {
         return (this.#borrowers ??= new BorrowersClient(this.options));
+    }
+
+    #coverage: CoverageClient | undefined;
+
+    public get coverage(): CoverageClient {
+        return (this.#coverage ??= new CoverageClient(this.options));
+    }
+
+    #facilities: FacilitiesClient | undefined;
+
+    public get facilities(): FacilitiesClient {
+        return (this.#facilities ??= new FacilitiesClient(this.options));
+    }
+
+    #loans: LoansClient | undefined;
+
+    public get loans(): LoansClient {
+        return (this.#loans ??= new LoansClient(this.options));
     }
 }
