@@ -112,7 +112,7 @@ export class Client {
     public async retrieveRejectionReasons(): Promise<PierApi.RejectionReasons> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/rejection_reasons"),
-            method: "POST",
+            method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
