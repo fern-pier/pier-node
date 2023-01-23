@@ -8,11 +8,11 @@ import * as core from "../../../../core";
 
 export const Request: core.serialization.Schema<
     serializers.applications.approve.Request.Raw,
-    PierApi.CreateApplicationRequest
-> = core.serialization.lazyObject(async () => (await import("../../..")).CreateApplicationRequest);
+    PierApi.ApproveApplicationRequest
+> = core.serialization.lazyObject(async () => (await import("../../..")).ApproveApplicationRequest);
 
 export declare namespace Request {
-    type Raw = serializers.CreateApplicationRequest.Raw;
+    type Raw = serializers.ApproveApplicationRequest.Raw;
 }
 
 export const Response: core.serialization.Schema<serializers.applications.approve.Response.Raw, PierApi.Application> =

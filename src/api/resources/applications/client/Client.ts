@@ -88,7 +88,7 @@ export class Client {
      */
     public async approve(
         applicationId: PierApi.ApplicationId,
-        request: PierApi.CreateApplicationRequest
+        request: PierApi.ApproveApplicationRequest
     ): Promise<PierApi.Application> {
         const _response = await core.fetcher({
             url: urlJoin(

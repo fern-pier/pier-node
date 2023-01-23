@@ -7,3 +7,4 @@ export * from "./LoanOffer";
 export * from "./RejectRequest";
 export * from "./RejectionReason";
 export * from "./GetApplicationRequest";
+export * from "./ApproveApplicationRequest";
