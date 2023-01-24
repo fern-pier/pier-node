@@ -6,13 +6,11 @@ import * as serializers from "../../..";
 import { PierApi } from "@fern-api/pier";
 import * as core from "../../../../core";
 
-export const Request: core.serialization.Schema<
-    serializers.applications.approve.Request.Raw,
-    PierApi.ApproveApplicationRequest
-> = core.serialization.lazyObject(async () => (await import("../../..")).ApproveApplicationRequest);
+export const Request: core.serialization.Schema<serializers.applications.approve.Request.Raw, PierApi.Offer> =
+    core.serialization.lazy(async () => (await import("../../..")).Offer);
 
 export declare namespace Request {
-    type Raw = serializers.ApproveApplicationRequest.Raw;
+    type Raw = serializers.Offer.Raw;
 }
 
 export const Response: core.serialization.Schema<serializers.applications.approve.Response.Raw, PierApi.Application> =

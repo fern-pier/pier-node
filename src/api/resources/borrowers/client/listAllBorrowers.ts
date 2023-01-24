@@ -4,6 +4,4 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export interface SignLoanAgreementRequest {
-    loanAgreementId: PierApi.LoanAgreementId;
-}
+export type Response = PierApi.Borrower[];

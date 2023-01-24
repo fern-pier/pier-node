@@ -32,7 +32,7 @@ export class Client {
      */
     public async create(request: PierApi.CreateFacilityRequest): Promise<PierApi.Facility> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
@@ -87,10 +87,7 @@ export class Client {
      * @throws {PierApi.FacilityNotFoundError}
      * @throws {PierApi.FacilityCannotBeClosedError}
      */
-    public async close(
-        facilityId: PierApi.FacilityId,
-        request: PierApi.CloseFacilityRequest
-    ): Promise<PierApi.Facility> {
+    public async close(facilityId: PierApi.FacilityId): Promise<PierApi.Facility> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
@@ -100,7 +97,6 @@ export class Client {
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
-            body: await serializers.facilities.close.Request.json(request),
         });
         if (_response.ok) {
             return await serializers.facilities.close.Response.parse(
@@ -202,7 +198,7 @@ export class Client {
      */
     public async listAll(): Promise<PierApi.Facility[]> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/facilities"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),

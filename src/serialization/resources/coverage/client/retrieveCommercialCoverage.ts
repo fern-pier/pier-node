@@ -8,9 +8,12 @@ import * as core from "../../../../core";
 
 export const Response: core.serialization.Schema<
     serializers.coverage.retrieveCommercialCoverage.Response.Raw,
-    PierApi.CommercialCoverage | undefined
-> = core.serialization.lazy(async () => (await import("../../..")).CommercialCoverage);
+    Record<string, PierApi.CommercialCoverage>
+> = core.serialization.record(
+    core.serialization.string(),
+    core.serialization.lazyObject(async () => (await import("../../..")).CommercialCoverage)
+);
 
 export declare namespace Response {
-    type Raw = serializers.CommercialCoverage.Raw | undefined;
+    type Raw = Record<string, serializers.CommercialCoverage.Raw>;
 }

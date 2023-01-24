@@ -12,7 +12,7 @@ export const LoanAgreement: core.serialization.ObjectSchema<serializers.LoanAgre
         applicationId: core.serialization.property("application_id", core.serialization.string()),
         createdOn: core.serialization.property("created_on", core.serialization.string()),
         documentUrl: core.serialization.property("document_url", core.serialization.string()),
-        signatureTimestamp: core.serialization.property("signature_timestamp", core.serialization.string()),
+        signatureTimestamp: core.serialization.property("signature_timestamp", core.serialization.string().optional()),
         status: core.serialization.lazy(async () => (await import("../../..")).LoanAgreementStatus),
     });
 
@@ -22,7 +22,7 @@ export declare namespace LoanAgreement {
         application_id: string;
         created_on: string;
         document_url: string;
-        signature_timestamp: string;
+        signature_timestamp?: string | null;
         status: serializers.LoanAgreementStatus.Raw;
     }
 }

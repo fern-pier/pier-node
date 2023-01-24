@@ -318,17 +318,17 @@ export class Client {
     /**
      * Retrieve all borrowers associated with your account
      */
-    public async getAllBorrowers(): Promise<PierApi.ConsumerBorrower[]> {
+    public async listAllBorrowers(): Promise<PierApi.Borrower[]> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/borrowers/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/borrowers"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
         });
         if (_response.ok) {
-            return await serializers.borrowers.getAllBorrowers.Response.parse(
-                _response.body as serializers.borrowers.getAllBorrowers.Response.Raw
+            return await serializers.borrowers.listAllBorrowers.Response.parse(
+                _response.body as serializers.borrowers.listAllBorrowers.Response.Raw
             );
         }
 

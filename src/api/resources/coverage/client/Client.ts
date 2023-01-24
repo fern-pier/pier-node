@@ -28,7 +28,7 @@ export class Client {
     /**
      * Retrieve state-by-state commercial coverage
      */
-    public async retrieveCommercialCoverage(): Promise<PierApi.CommercialCoverage | undefined> {
+    public async retrieveCommercialCoverage(): Promise<Record<string, PierApi.CommercialCoverage>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
@@ -70,7 +70,7 @@ export class Client {
     /**
      * Retrieve state-by-state consumer coverage list
      */
-    public async retrieveConsumerCoverage(): Promise<unknown> {
+    public async retrieveConsumerCoverage(): Promise<Record<string, PierApi.ConsumerCoverage>> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/coverage/consumer"),
             method: "GET",
@@ -109,7 +109,7 @@ export class Client {
     /**
      * Retrieve a list of valid reasons to reject an applicant, along with descriptions for each reason
      */
-    public async retrieveRejectionReasons(): Promise<PierApi.RejectionReasons> {
+    public async retrieveRejectionReasons(): Promise<PierApi.RetrieveRejectionReasonsResponse> {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/rejection_reasons"),
             method: "GET",

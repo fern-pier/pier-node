@@ -6,11 +6,18 @@ import * as serializers from "../../..";
 import { PierApi } from "@fern-api/pier";
 import * as core from "../../../../core";
 
-export const Request: core.serialization.Schema<serializers.applications.reject.Request.Raw, PierApi.RejectRequest> =
-    core.serialization.lazyObject(async () => (await import("../../..")).RejectRequest);
+export const Request: core.serialization.Schema<serializers.applications.reject.Request.Raw, PierApi.Reject> =
+    core.serialization.object({
+        rejectionReason: core.serialization.property(
+            "rejection_reason",
+            core.serialization.lazy(async () => (await import("../../..")).RejectionReason)
+        ),
+    });
 
 export declare namespace Request {
-    type Raw = serializers.RejectRequest.Raw;
+    interface Raw {
+        rejection_reason: serializers.RejectionReason.Raw;
+    }
 }
 
 export const Response: core.serialization.Schema<serializers.applications.reject.Response.Raw, PierApi.Application> =

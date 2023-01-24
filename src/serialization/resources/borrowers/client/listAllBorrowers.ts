@@ -7,10 +7,10 @@ import { PierApi } from "@fern-api/pier";
 import * as core from "../../../../core";
 
 export const Response: core.serialization.Schema<
-    serializers.borrowers.getAllBorrowers.Response.Raw,
-    PierApi.ConsumerBorrower[]
-> = core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).ConsumerBorrower));
+    serializers.borrowers.listAllBorrowers.Response.Raw,
+    PierApi.Borrower[]
+> = core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).Borrower));
 
 export declare namespace Response {
-    type Raw = serializers.ConsumerBorrower.Raw[];
+    type Raw = serializers.Borrower.Raw[];
 }

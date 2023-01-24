@@ -32,12 +32,14 @@ export class Client {
      */
     public async create(request: PierApi.CreateLoanAgreementRequest): Promise<PierApi.LoanAgreement> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/loan_agreements/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/loan_agreements"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
-            body: await serializers.loans.create.Request.json(request),
+            body: await serializers.loans.create.Request.json({
+                applicationId: request.applicationId,
+            }),
         });
         if (_response.ok) {
             return await serializers.loans.create.Response.parse(
@@ -87,10 +89,7 @@ export class Client {
      * @throws {PierApi.ApplicationNotFoundError}
      * @throws {PierApi.DocumentCannotBeSignedError}
      */
-    public async sign(
-        loanAgreementId: PierApi.LoanAgreementId,
-        request: PierApi.SignLoanAgreementRequest
-    ): Promise<PierApi.SignLoanAgreementResponse> {
+    public async sign(loanAgreementId: PierApi.LoanAgreementId): Promise<PierApi.SignLoanAgreementResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
@@ -100,7 +99,6 @@ export class Client {
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
-            body: await serializers.loans.sign.Request.json(request),
         });
         if (_response.ok) {
             return await serializers.loans.sign.Response.parse(_response.body as serializers.loans.sign.Response.Raw);
@@ -198,7 +196,7 @@ export class Client {
      */
     public async getAll(): Promise<PierApi.LoanAgreement[]> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/loan_agreements/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/loan_agreements"),
             method: "GET",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),

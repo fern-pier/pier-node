@@ -4,6 +4,17 @@
 
 import { PierApi } from "@fern-api/pier";
 
+/**
+ * @example
+ *     {
+ *         status: PierApi.LoanAgreementStatus.Signed,
+ *         id: "doc_96d13bec673c4eba8d44c9cda3bbb811",
+ *         applicationId: "app_a9d2f388030d4f4296f80fc327e08d0d",
+ *         signatureTimestamp: new Date("2022-12-31T21:10:47.610Z"),
+ *         documentUrl: "https://production-formapi-docs.s3.amazonaws.com/store/acc_QqdcDH47A63qKZbK3S/templates/tpl_4zqGxezHzrfqDaxGr2/submissions/sub_jQRTtHgekEbdJTxtsR.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJESVN6QC4ACN3XSQ%2F20221231%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221231T210718Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=9ead57dba9e8e2179a3e9950f1c7c19fe8b10dfbc55f5ce09228bd216e4cdd73",
+ *         createdOn: new Date("2022-12-31T21:07:16.642Z")
+ *     }
+ */
 export interface SignLoanAgreementResponse {
     status: PierApi.LoanAgreementStatus;
     id: PierApi.LoanAgreementId;

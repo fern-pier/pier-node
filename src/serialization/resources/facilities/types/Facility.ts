@@ -24,7 +24,7 @@ export const Facility: core.serialization.ObjectSchema<serializers.Facility.Raw,
         ),
         createdOn: core.serialization.property("created_on", core.serialization.date()),
         status: core.serialization.lazy(async () => (await import("../../..")).CreditStatus),
-        terms: core.serialization.lazyObject(async () => (await import("../../..")).LineOfCreditOffer),
+        terms: core.serialization.lazy(async () => (await import("../../..")).Offer),
     });
 
 export declare namespace Facility {
@@ -36,6 +36,6 @@ export declare namespace Facility {
         credit_type: serializers.CreditType.Raw;
         created_on: string;
         status: serializers.CreditStatus.Raw;
-        terms: serializers.LineOfCreditOffer.Raw;
+        terms: serializers.Offer.Raw;
     }
 }

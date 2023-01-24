@@ -8,9 +8,9 @@ import * as core from "../../../../core";
 
 export const Response: core.serialization.Schema<
     serializers.coverage.retrieveRejectionReasons.Response.Raw,
-    PierApi.RejectionReasons
-> = core.serialization.lazy(async () => (await import("../../..")).RejectionReasons);
+    PierApi.RetrieveRejectionReasonsResponse
+> = core.serialization.lazy(async () => (await import("../../..")).RetrieveRejectionReasonsResponse);
 
 export declare namespace Response {
-    type Raw = serializers.RejectionReasons.Raw;
+    type Raw = serializers.RetrieveRejectionReasonsResponse.Raw;
 }

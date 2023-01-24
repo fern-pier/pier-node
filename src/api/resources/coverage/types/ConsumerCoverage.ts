@@ -4,4 +4,7 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export type RejectionReasons = Record<PierApi.RejectionReason, string>[];
+export interface ConsumerCoverage {
+    maxApr?: number;
+    limit1: PierApi.CoverageLimit;
+}

@@ -4,4 +4,6 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export type Response = Record<string, PierApi.CommercialCoverage>;
+export interface Reject {
+    rejectionReason: PierApi.RejectionReason;
+}

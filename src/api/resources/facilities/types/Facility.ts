@@ -4,6 +4,55 @@
 
 import { PierApi } from "@fern-api/pier";
 
+/**
+ * @example
+ *     {
+ *         terms: PierApi.Offer.lineOfCredit({
+ *             amount: 1000000,
+ *             apr: 0,
+ *             annualFee: 0,
+ *             billingCycle: 30,
+ *             financeCharge: 0,
+ *             gracePeriod: 21,
+ *             gracePeriodInterestRate: 0,
+ *             interestRate: 0,
+ *             latePaymentFee: 0,
+ *             originationFee: 0,
+ *             term: 24
+ *         }),
+ *         id: "fac_7264c6575a894548a386939434b0adf3",
+ *         applicationId: "app_ad1564ffb1d745f9ad482bb5182708e2",
+ *         borrowerId: "bor_d965bea9f47a4b108562642dbb1dae9f",
+ *         loanAgreementId: "doc_234259b117854d0194bc5864a6c45b42",
+ *         creditType: PierApi.CreditType.RevolvingLineOfCredit,
+ *         status: PierApi.CreditStatus.Active,
+ *         createdOn: new Date("2023-01-17T04:59:21.773Z")
+ *     }
+ *
+ * @example
+ *     {
+ *         terms: PierApi.Offer.lineOfCredit({
+ *             amount: 1000000,
+ *             apr: 0,
+ *             annualFee: 0,
+ *             billingCycle: 30,
+ *             financeCharge: 0,
+ *             gracePeriod: 21,
+ *             gracePeriodInterestRate: 0,
+ *             interestRate: 0,
+ *             latePaymentFee: 0,
+ *             originationFee: 0,
+ *             term: 24
+ *         }),
+ *         id: "fac_7264c6575a894548a386939434b0adf3",
+ *         applicationId: "app_ad1564ffb1d745f9ad482bb5182708e2",
+ *         borrowerId: "bor_d965bea9f47a4b108562642dbb1dae9f",
+ *         loanAgreementId: "doc_234259b117854d0194bc5864a6c45b42",
+ *         creditType: PierApi.CreditType.RevolvingLineOfCredit,
+ *         status: PierApi.CreditStatus.Closed,
+ *         createdOn: new Date("2023-01-17T04:59:21.773Z")
+ *     }
+ */
 export interface Facility {
     id: PierApi.FacilityId;
     /** The `application_id` of the corresponding loan application for the facility */
@@ -19,5 +68,5 @@ export interface Facility {
     /** The status of the facility. */
     status: PierApi.CreditStatus;
     /** An object containing a summary of the terms of the facility. */
-    terms: PierApi.LineOfCreditOffer;
+    terms: PierApi.Offer;
 }

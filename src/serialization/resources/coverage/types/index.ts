@@ -1,2 +1,6 @@
 export * from "./CommercialCoverage";
-export * from "./RejectionReasons";
+export * from "./ConsumerCoverage";
+export * from "./BussinessType";
+export * from "./CoverageLimit";
+export * from "./CoverageAmount";
+export * from "./RetrieveRejectionReasonsResponse";

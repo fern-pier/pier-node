@@ -4,4 +4,6 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export type Response = PierApi.ConsumerBorrower[];
+export interface CoverageLimit {
+    amount: PierApi.CoverageAmount;
+}

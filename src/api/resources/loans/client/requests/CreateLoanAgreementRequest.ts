@@ -4,6 +4,6 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export interface RejectRequest {
-    rejectionReason: PierApi.RejectionReason;
+export interface CreateLoanAgreementRequest {
+    applicationId: PierApi.ApplicationId;
 }

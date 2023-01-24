@@ -14,7 +14,7 @@ export const LineOfCreditOffer: core.serialization.ObjectSchema<
     apr: core.serialization.number(),
     annualFee: core.serialization.property("annual_fee", core.serialization.number()),
     billingCycle: core.serialization.property("billing_cycle", core.serialization.number()),
-    financeCharge: core.serialization.property("finance_charge", core.serialization.number()),
+    financeCharge: core.serialization.property("finance_charge", core.serialization.number().optional()),
     gracePeriod: core.serialization.property("grace_period", core.serialization.number()),
     gracePeriodInterestRate: core.serialization.property(
         "grace_period_interest_rate",
@@ -40,7 +40,7 @@ export declare namespace LineOfCreditOffer {
         apr: number;
         annual_fee: number;
         billing_cycle: number;
-        finance_charge: number;
+        finance_charge?: number | null;
         grace_period: number;
         grace_period_interest_rate?: number | null;
         interest_rate: number;

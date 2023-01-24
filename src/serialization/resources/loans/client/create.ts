@@ -9,10 +9,17 @@ import * as core from "../../../../core";
 export const Request: core.serialization.Schema<
     serializers.loans.create.Request.Raw,
     PierApi.CreateLoanAgreementRequest
-> = core.serialization.lazyObject(async () => (await import("../../..")).CreateLoanAgreementRequest);
+> = core.serialization.object({
+    applicationId: core.serialization.property(
+        "application_id",
+        core.serialization.lazy(async () => (await import("../../..")).ApplicationId)
+    ),
+});
 
 export declare namespace Request {
-    type Raw = serializers.CreateLoanAgreementRequest.Raw;
+    interface Raw {
+        application_id: serializers.ApplicationId.Raw;
+    }
 }
 
 export const Response: core.serialization.Schema<serializers.loans.create.Response.Raw, PierApi.LoanAgreement> =

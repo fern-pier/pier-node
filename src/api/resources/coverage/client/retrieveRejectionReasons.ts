@@ -4,4 +4,4 @@
 
 import { PierApi } from "@fern-api/pier";
 
-export type Response = PierApi.RejectionReasons;
+export type Response = PierApi.RetrieveRejectionReasonsResponse;

@@ -1,6 +1,7 @@
 export * from "./BusinessBorrowerId";
 export * from "./BeneficialOwnerId";
 export * from "./ConsumerBorrowerId";
+export * from "./Borrower";
 export * from "./BusinessBorrowerRequest";
 export * from "./BusinessBorrower";
 export * from "./BeneficialOwners";

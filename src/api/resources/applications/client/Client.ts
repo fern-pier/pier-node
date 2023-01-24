@@ -32,7 +32,7 @@ export class Client {
      */
     public async create(request: PierApi.CreateApplicationRequest): Promise<PierApi.Application> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications/"),
+            url: urlJoin(this.options.environment ?? environments.PierApiEnvironment.Production, "/applications"),
             method: "POST",
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
@@ -86,10 +86,7 @@ export class Client {
      * @throws {PierApi.InvalidInputError}
      * @throws {PierApi.BorrowerNotFoundError}
      */
-    public async approve(
-        applicationId: PierApi.ApplicationId,
-        request: PierApi.ApproveApplicationRequest
-    ): Promise<PierApi.Application> {
+    public async approve(applicationId: PierApi.ApplicationId, request: PierApi.Offer): Promise<PierApi.Application> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
@@ -149,10 +146,7 @@ export class Client {
      * @throws {PierApi.InvalidInputError}
      * @throws {PierApi.ApplicationNotFoundError}
      */
-    public async reject(
-        applicationId: PierApi.ApplicationId,
-        request: PierApi.RejectRequest
-    ): Promise<PierApi.Application> {
+    public async reject(applicationId: PierApi.ApplicationId, request: PierApi.Reject): Promise<PierApi.Application> {
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.PierApiEnvironment.Production,
@@ -162,7 +156,9 @@ export class Client {
             headers: {
                 Authorization: core.BasicAuth.toAuthorizationHeader(await core.Supplier.get(this.options.credentials)),
             },
-            body: await serializers.applications.reject.Request.json(request),
+            body: await serializers.applications.reject.Request.json({
+                rejectionReason: request.rejectionReason,
+            }),
         });
         if (_response.ok) {
             return await serializers.applications.reject.Response.parse(

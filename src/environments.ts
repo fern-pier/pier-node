@@ -4,12 +4,6 @@
 
 export const PierApiEnvironment = {
     Production: "https://production.pier-finance.com/api",
-    /**
-     * The sandbox is designed to mimic the production environment, with a few exceptions.
-     * Loan agreements created in the sandbox will have large `draft` watermarks and funds flows will only occur in production.
-     * Sandbox API keys are prefixed with `test_` while production API keys are  prefixed with `prod_`.
-     *
-     */
     Sandbox: "https://sandbox.pier-finance.com/api",
 } as const;
 

@@ -11,3 +11,5 @@ export * from "./facilities/types";
 export * as loans from "./loans";
 export * from "./loans/types";
 export * from "./commons/errors";
+export * from "./applications/client/requests";
+export * from "./loans/client/requests";
